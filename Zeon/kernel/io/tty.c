@@ -42,6 +42,28 @@ void vga_movecsr(void) {
 	outb(0x3D5, i);
 }
 
+void vga_writedigit(uint8_t digit) {
+	vga_putchar('0' + digit);
+}
+
+void vga_writedec(uint32_t num) {
+	if (num == 0) {
+		vga_writedigit(0);
+		return;
+	}
+	
+	uint32_t rev = 0;
+	while (num > 0) {
+		rev = rev * 10 + num % 10;
+		num /= 10;
+	}
+
+	while (rev > 0) {
+		vga_writedigit(rev % 10);
+		rev /= 10;
+	}
+}
+
 void vga_writehex(uint32_t num) {
 	char *ref = "0123456789ABCDEF";
 	char buf[10];

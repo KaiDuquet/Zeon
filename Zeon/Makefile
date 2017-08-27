@@ -4,24 +4,30 @@ CFLAGS=-ffreestanding -g -O2 -isystem $(INCLUDEDIR) -Wall -Wextra -Werror
 LIBS=-nostdlib -lgcc
 
 ZEON_OBJS=\
-kernel/boot/boot.o \
+kernel/arch_86/boot.o \
+kernel/arch_86/interrupt.o \
+kernel/arch_86/gdt.o \
 kernel/kernel.o \
 kernel/io/tty.o \
+kernel/cpu/gdt.o \
+kernel/cpu/idt.o \
+kernel/cpu/isr.o \
+kernel/libc/string.o \
 
 OBJS=\
-kernel/boot/crti.o \
-kernel/boot/crtbegin.o \
+kernel/arch_86/crti.o \
+kernel/arch_86/crtbegin.o \
 $(ZEON_OBJS) \
-kernel/boot/crtend.o \
-kernel/boot/crtn.o \
+kernel/arch_86/crtend.o \
+kernel/arch_86/crtn.o \
 
 LD_LIST=\
-kernel/boot/crti.o \
-kernel/boot/crtbegin.o \
+kernel/arch_86/crti.o \
+kernel/arch_86/crtbegin.o \
 $(ZEON_OBJS) \
 $(LIBS) \
-kernel/boot/crtend.o \
-kernel/boot/crtn.o \
+kernel/arch_86/crtend.o \
+kernel/arch_86/crtn.o \
 
 .PHONY: all clean iso run
 .SUFFIXES: .c .o .S
@@ -31,7 +37,7 @@ all: zeon.kernel
 zeon.kernel: $(OBJS) linker.ld
 	$(CC) -T linker.ld -o $@ $(CFLAGS) $(LD_LIST)
 
-kernel/boot/crtbegin.o kernel/boot/crtend.o:
+kernel/arch_86/crtbegin.o kernel/arch_86/crtend.o:
 	OBJ=`$(CC) $(CFLAGS) -print-file-name=$(@F)` && cp "$$OBJ" $@
 
 .c.o:

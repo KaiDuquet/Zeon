@@ -27,6 +27,8 @@ void vga_init(void);
 void vga_putchar(char c);
 void vga_puts(const char *data);
 void vga_writehex(uint32_t num);
+void vga_writedec(uint32_t num);
+// void vga_writedigit(uint8_t digit);
 // void vga_scroll(void);
 void vga_clear(void);
 // void vga_movecsr(void);

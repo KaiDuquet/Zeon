@@ -5,9 +5,11 @@ A hobby x86, 32-bit kernel written in C.
 The Zeon kernel is for now very basic but here's what it implements:
 - GRUB 2 Bootloader
 - VGA writing support (Through tty.c)
+- Segmentation with the Global Descriptor Table
+- Interrupts with the Interrupt Descriptor Table (Still a Bug in it)
 - That's it for now :)
 
-I plan to add all the neccessary components such as segmentation, paging, interrupts, MMU, and _maybe_ user-space stuff.
+I plan to add all the neccessary components such as paging, MMU, and _maybe_ user-space stuff.
 
 ## Building Zeon
 Zeon is a Kernel designed to be on a x86 architecture. You will need to setup a GCC cross-compiler for any 32-bit x86 architecture (I used i686-elf, but it can be i386-elf or newer).
